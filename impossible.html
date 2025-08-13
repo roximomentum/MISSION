@@ -7,23 +7,61 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-400 font-serif">
+    <!-- Navigation -->
     <nav class="bg-blue-700 p-4 text-white">
       <div class="container mx-auto flex justify-between items-center">
         <h1 class="font-extrabold text-2xl">ROXIMOMENTUM</h1>
-        <ul class="flex gap-4 text-l">
+        <ul class="flex gap-4 text-l hover:underline hover:text-blue-300">
           <li>
-            <a href="#" class="hover:underline hover:text-blue-300">Home</a>
-          </li>
-          <li>
-            <a href="#" class="hover:underline hover:text-blue-300">Products</a>
-          </li>
-          <li>
-            <a href="#" class="hover:underline hover:text-blue-300"
-              >New Arrivals</a
+            <a
+              href="#"
+              class="flex gap-4 text-l hover:underline hover:text-blue-300 hover:scale-110"
+              >Home</a
             >
+          </li>
+          <li>
+            <a href="#" class="hover:scale-110">Products</a>
+          </li>
+          <li>
+            <a href="#" class="hover:scale-110">New Arrivals</a>
+          </li>
+          <li>
+            <a href="#" class="hover:scale-110">🛒</a>
           </li>
         </ul>
       </div>
     </nav>
+
+    <!-- product container -->
+    <section class="container mx-auto py-8">
+      <h1 class="font-extrabold text-xl mb-5">Products</h1>
+      <div
+        id="products"
+        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-20"
+      ></div>
+    </section>
+    <script>
+      fetch("https://fakestoreapi.com/products")
+        .then((Response) => Response.json())
+        .then((data) => {
+          const productContainer = document.getElementById("products");
+
+          data.forEach((product) => {
+            const card = document.createElement("div");
+            card.className =
+              "bg-white hover:scale-125 rounded-lg shadow-md p-4 flex flex-col";
+            card.innerHTML = `<img class="" src="${product.image}">
+        <h3>${product.title}</h3>
+        <p class="text-blue-700">${product.price}</p>
+        <p>${product.category}</p>
+        <button class="bg-blue-400 hover:scale-125 hover:bg-blue-600 w-[100px] items-center text-white rounded-xl mt-auto">add to cart </button>
+        `;
+            productContainer.appendChild(card);
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        });
+    </script>
   </body>
 </html>
